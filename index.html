@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malla Curricular - Terapia de Audición, Voz y Lenguaje</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Carrera Profesional de Terapia de Audición, Voz y Lenguaje</h1>
+        <div class="controls">
+            <button id="zoom-in">+</button>
+            <button id="zoom-out">-</button>
+            <button id="reset">Reiniciar</button>
+            <button id="toggle-prereqs">Mostrar/Ocultar Prerrequisitos</button>
+        </div>
+        <div id="malla-container">
+            <svg id="malla-svg"></svg>
+        </div>
+        <div id="course-info">
+            <h2>Información del Curso</h2>
+            <div id="info-content"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
