@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malla Curricular - Terapia de Audición, Voz y Lenguaje</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FFF8E1;
+            color: #212121;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #FFECB3;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2E7D32;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            color: #689F38;
+            font-weight: normal;
+            font-size: 1.2em;
+        }
+        
+        .summary {
+            background-color: #C8E6C9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .cycle-container {
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .cycle-title {
+            background-color: #81C784;
+            color: white;
+            padding: 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .cycle-title:hover {
+            background-color: #689F38;
+        }
+        
+        .cycle-content {
+            display: none;
+            background-color: #F1F8E9;
+            padding: 15px;
+        }
+        
+        .course {
+            background-color: white;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 5px solid #689F38;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .course:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .course.elective {
+            border-left-color: #FFA000;
+        }
+        
+        .course.online {
+            border-left-color: #5C6BC0;
+        }
+        
+        .course.hybrid {
+            border-left-color: #26A69A;
+        }
+        
+        .course-code {
+            font-weight: bold;
+            color: #2E7D32;
+            font-size: 0.9em;
+        }
+        
+        .course-name {
+            font-weight: 600;
+            margin: 5px 0;
+        }
+        
+        .course-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            font-size: 0.85em;
+        }
+        
+        .course-credits {
+            background-color: #81C784;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+        
+        .course-type {
+            background-color: #90CAF9;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+        
+        .course-modality {
+            background-color: #FFB74D;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+        
+        .course-prerequisite {
+            width: 100%;
+            font-size: 0.8em;
+            color: #616161;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #BDBDBD;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: #C8E6C9;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #81C784;
+            color: white;
+        }
+        
+        .search-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 25px;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            border: 1px solid #AED581;
+            border-radius: 25px;
+            background-color: white;
+            font-size: 1em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #689F38;
+            box-shadow: 0 2px 8px rgba(104, 159, 56, 0.2);
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            font-size: 0.85em;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        @media (max-width: 768px) {
+            .cycle-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .course {
+                padding: 12px;
+            }
+            
+            .filters {
+                gap: 8px;
+            }
+            
+            .filter-btn {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Carrera Profesional de Terapia de Audición, Voz y Lenguaje</h1>
+        <p class="subtitle">Modalidad Presencial - Malla Curricular 2025</p>
+    </div>
+    
+    <div class="summary">
+        <p>Total de créditos: 205 | Horas crédito: General (19%) - Específico (41%) - Especialidad (40%)</p>
+    </div>
+    
+    <div class="search-container">
+        <input type="text" class="search-box" placeholder="Buscar asignatura por nombre, código o créditos...">
+    </div>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #689F38;"></div>
+            <span>Presencial</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #5C6BC0;"></div>
+            <span>No presencial</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #26A69A;"></div>
+            <span>Semipresencial</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #FFA000;"></div>
+            <span>Electiva</span>
+        </div>
+    </div>
+    
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="general">Generales</button>
+        <button class="filter-btn" data-filter="especifico">Específicas</button>
+        <button class="filter-btn" data-filter="especialidad">Especialidad</button>
+        <button class="filter-btn" data-filter="obligatorio">Obligatorias</button>
+        <button class="filter-btn" data-filter="electivo">Electivas</button>
+    </div>
+    
+    <!-- Primer Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Primer Ciclo</span>
+            <span>8 asignaturas | 21 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">U0112</div>
+                <div class="course-name">Técnicas Básicas en Atención de Salud</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">U0002</div>
+                <div class="course-name">Elementos de Química</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">U0077</div>
+                <div class="course-name">Matemáticas Básicas</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">U0162</div>
+                <div class="course-name">Introducción a la Terapia de Lenguaje</div>
+                <div class="course-details">
+                    <span class="course-credits">1 crédito</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="online">
+                <div class="course-code">U0684</div>
+                <div class="course-name">Filosofía y Ética</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="hybrid">
+                <div class="course-code">U0685</div>
+                <div class="course-name">Desarrollo Personal y Autonomía</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">Semipresencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="online">
+                <div class="course-code">U0686</div>
+                <div class="course-name">Comunicación y Redacción I</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="online">
+                <div class="course-code">G0037</div>
+                <div class="course-name">Inglés 1</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Segundo Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Segundo Ciclo</span>
+            <span>8 asignaturas | 23 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">U0105</div>
+                <div class="course-name">Fundamentos de Química Orgánica</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Elementos de Química</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">U0673</div>
+                <div class="course-name">Biología General</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">U0677</div>
+                <div class="course-name">Física Básica</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Matemáticas Básicas</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="online">
+                <div class="course-code">U0681</div>
+                <div class="course-name">Comunicación y Redacción II</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Comunicación y Redacción I</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="online">
+                <div class="course-code">U0683</div>
+                <div class="course-name">Cultura Ambiental y Desarrollo Sostenible</div>
+                <div class="course-details">
+                    <span class="course-credits">1 crédito</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="online">
+                <div class="course-code">U0687</div>
+                <div class="course-name">Pensamiento Científico e Investigación</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="online">
+                <div class="course-code">U0688</div>
+                <div class="course-name">Ciencias Sociales en el Contexto Actual</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="online">
+                <div class="course-code">G0038</div>
+                <div class="course-name">Inglés 2</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Inglés 1</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tercer Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Tercer Ciclo</span>
+            <span>6 asignaturas | 20 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1622</div>
+                <div class="course-name">Fundamentos de Morfofisiología</div>
+                <div class="course-details">
+                    <span class="course-credits">8 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Biología General / Fundamentos de Química Orgánica</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="online">
+                <div class="course-code">T1710</div>
+                <div class="course-name">Lingüística y Fonética</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Comunicación y Redacción</div>
+            </div>
+            
+            <div class="course elective" data-type="general" data-category="electivo" data-modality="presencial">
+                <div class="course-code">T0377</div>
+                <div class="course-name">Actividad Complementaria I</div>
+                <div class="course-details">
+                    <span class="course-credits">1 crédito</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="online">
+                <div class="course-code">G0039</div>
+                <div class="course-name">Inglés 3</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Inglés 2</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1713</div>
+                <div class="course-name">Asignatura Electiva I</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1835</div>
+                <div class="course-name">Farmacología</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Fundamentos de Morfofisiología</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cuarto Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Cuarto Ciclo</span>
+            <span>8 asignaturas | 23 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="hybrid">
+                <div class="course-code">T1653</div>
+                <div class="course-name">Estadística</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Semipresencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Matemáticas Básicas</div>
+            </div>
+            
+            <div class="course elective" data-type="especifico" data-category="electivo" data-modality="hybrid">
+                <div class="course-code">T1713</div>
+                <div class="course-name">Asignatura Electiva I</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Semipresencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="online">
+                <div class="course-code">T1835</div>
+                <div class="course-name">Farmacología</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Fundamentos de Morfofisiología</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T0684</div>
+                <div class="course-name">Fisiopatología General</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Fundamentos de Morfofisiología</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1836</div>
+                <div class="course-name">Anatomía del Aparato Fonoarticulador y de la Audición</div>
+                <div class="course-details">
+                    <span class="course-credits">5 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Fundamentos de Morfofisiología</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1387</div>
+                <div class="course-name">Neurociencias en Rehabilitación</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Fundamentos de Morfofisiología</div>
+            </div>
+            
+            <div class="course elective" data-type="general" data-category="electivo" data-modality="presencial">
+                <div class="course-code">T0378</div>
+                <div class="course-name">Actividad Complementaria II</div>
+                <div class="course-details">
+                    <span class="course-credits">1 crédito</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="general" data-category="obligatorio" data-modality="online">
+                <div class="course-code">G0040</div>
+                <div class="course-name">Inglés 4</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Inglés 3</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quinto Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Quinto Ciclo</span>
+            <span>7 asignaturas | 20 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1714</div>
+                <div class="course-name">Problemas de Aprendizaje en las Alteraciones del Lenguaje</div>
+                <div class="course-details">
+                    <span class="course-credits">5 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Neurociencia en Rehabilitación</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1716</div>
+                <div class="course-name">Neurolingüística y Neuropsicología</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Neurociencia en Rehabilitación</div>
+            </div>
+            
+            <div class="course elective" data-type="especifico" data-category="electivo" data-modality="presencial">
+                <div class="course-code">T0919</div>
+                <div class="course-name">Asignatura Electiva II</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1837</div>
+                <div class="course-name">Neurodesarrollo e Intervención Temprana</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Neurociencia en Rehabilitación</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="hybrid">
+                <div class="course-code">T1838</div>
+                <div class="course-name">Mental Health and Rehabilitation with an Inclusive Perspective</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Semipresencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T0887</div>
+                <div class="course-name">Patología de la Audición</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Anatomía del Aparato Fonoarticulador y de la Audición</div>
+            </div>
+            
+            <div class="course elective" data-type="general" data-category="electivo" data-modality="presencial">
+                <div class="course-code">T0379</div>
+                <div class="course-name">Actividad Complementaria III</div>
+                <div class="course-details">
+                    <span class="course-credits">1 crédito</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sexto Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Sexto Ciclo</span>
+            <span>6 asignaturas | 20 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1391</div>
+                <div class="course-name">Patología de Lenguaje y Habla en Niños</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Problemas de Aprendizaje en las Alteraciones del Lenguaje / Neurolingüística y Neuropsicología</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1392</div>
+                <div class="course-name">Patología de Voz</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Anatomía del Aparato Fonoarticulador y de la Audición</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T0655</div>
+                <div class="course-name">Audiología y Adaptación de Prótesis</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Patología de la Audición</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1393</div>
+                <div class="course-name">Patología de Lenguaje y Habla en Adultos</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Problemas de Aprendizaje en las Alteraciones del Lenguaje / Neurolingüística y Neuropsicología / Neurodesarrollo e Intervención Temprana</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T0654</div>
+                <div class="course-name">Alteraciones de la Motricidad Orofacial</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Anatomía del Aparato Fonoarticulador y de la Audición</div>
+            </div>
+            
+            <div class="course elective" data-type="general" data-category="electivo" data-modality="presencial">
+                <div class="course-code">T0380</div>
+                <div class="course-name">Actividad Complementaria IV</div>
+                <div class="course-details">
+                    <span class="course-credits">1 crédito</span>
+                    <span class="course-type">General</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Séptimo Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Séptimo Ciclo</span>
+            <span>6 asignaturas | 20 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T0177</div>
+                <div class="course-name">Metodología de la Investigación</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Estadística</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="online">
+                <div class="course-code">T1659</div>
+                <div class="course-name">Ética y Deontología</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ciencias Sociales en el Contexto Actual</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T0261</div>
+                <div class="course-name">Rehabilitación de Lenguaje en Niños</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Patología de Lenguaje y Habla en Niños</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T0610</div>
+                <div class="course-name">Rehabilitación de la Voz</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Patología de Voz</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T0520</div>
+                <div class="course-name">Rehabilitación del Habla en Niños</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Patología de Lenguaje y Habla en Niños</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="hybrid">
+                <div class="course-code">T1396</div>
+                <div class="course-name">Rehabilitación de la Discapacidad Auditiva</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Semipresencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Patología de la Audición</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Octavo Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Octavo Ciclo</span>
+            <span>7 asignaturas | 21 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="online">
+                <div class="course-code">T1660</div>
+                <div class="course-name">Epidemiología y Salud Pública</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Matemáticas Básicas</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="online">
+                <div class="course-code">T1661</div>
+                <div class="course-name">Legislación en Salud</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">No presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Ciencias Sociales en el Contexto Actual</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1662</div>
+                <div class="course-name">Taller de Diseño de Proyecto de Investigación</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Metodología de la Investigación / Estadística</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="hybrid">
+                <div class="course-code">T1655</div>
+                <div class="course-name">Gestión y Administración en Servicios de Salud</div>
+                <div class="course-details">
+                    <span class="course-credits">3 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Semipresencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Metodología de la Investigación</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T0656</div>
+                <div class="course-name">Rehabilitación de las Alteraciones de la Motricidad Orofacial</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Alteraciones de la Motricidad Orofacial</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T0676</div>
+                <div class="course-name">Rehabilitación del Lenguaje y Habla en Adultos</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Patología de Lenguaje y Habla en Adultos</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1839</div>
+                <div class="course-name">Atención Comunitaria</div>
+                <div class="course-details">
+                    <span class="course-credits">4 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Todas las asignaturas de especialidad</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Noveno Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Noveno Ciclo</span>
+            <span>2 asignaturas | 22 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1840</div>
+                <div class="course-name">Rotación I</div>
+                <div class="course-details">
+                    <span class="course-credits">11 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Todas las asignaturas del 1ro al 4to año, incluye el idioma inglés, actividades complementarias y asignaturas electivas</div>
+            </div>
+            
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1841</div>
+                <div class="course-name">Rotación II</div>
+                <div class="course-details">
+                    <span class="course-credits">11 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Todas las asignaturas del 1ro al 4to año, incluye el idioma inglés, actividades complementarias y asignaturas electivas</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Décimo Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Décimo Ciclo</span>
+            <span>3 asignaturas | 24 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especifico" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1357</div>
+                <div class="course-name">Trabajo de Investigación</div>
+                <div class="course-details">
+                    <span class="course-credits">2 créditos</span>
+                    <span class="course-type">Específico</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Taller de Diseño de Investigación</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1843</div>
+                <div class="course-name">Rotación III</div>
+                <div class="course-details">
+                    <span class="course-credits">11 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Todas las asignaturas del 1ro al 4to año, incluye el idioma inglés, actividades complementarias y asignaturas electivas</div>
+            </div>
+            
+            <div class="course" data-type="especialidad" data-category="obligatorio" data-modality="presencial">
+                <div class="course-code">T1844</div>
+                <div class="course-name">Rotación IV</div>
+                <div class="course-details">
+                    <span class="course-credits">11 créditos</span>
+                    <span class="course-type">Especialidad</span>
+                    <span class="course-modality">Presencial</span>
+                </div>
+                <div class="course-prerequisite">Prerrequisito: Todas las asignaturas del 1ro al 4to año, incluye el idioma inglés, actividades complementarias y asignaturas electivas</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Función para mostrar/ocultar ciclos
+        function toggleCycle(element) {
+            const content = element.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                element.style.borderRadius = "8px";
+            } else {
+                content.style.display = "block";
+                element.style.borderRadius = "8px 8px 0 0";
+            }
+        }
+        
+        // Función para filtrar asignaturas
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                const courses = document.querySelectorAll('.course');
+                
+                courses.forEach(course => {
+                    if (filter === 'all') {
+                        course.style.display = 'block';
+                    } else if (course.getAttribute('data-type') === filter || 
+                               course.getAttribute('data-category') === filter) {
+                        course.style.display = 'block';
+                    } else {
+                        course.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Función para búsqueda
+        const searchBox = document.querySelector('.search-box');
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const courses = document.querySelectorAll('.course');
+            
+            courses.forEach(course => {
+                const text = course.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    course.style.display = 'block';
+                } else {
+                    course.style.display = 'none';
+                }
+            });
+        });
+        
+        // Abrir primer ciclo por defecto
+        document.querySelector('.cycle-title').click();
+    </script>
+</body>
+</html>
