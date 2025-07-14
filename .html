@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malla Curricular - Terapia de Audición, Voz y Lenguaje</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #FFF8E1;
+            color: #212121;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #FFECB3;
+            border-radius: 10px;
+        }
+        
+        h1 {
+            color: #2E7D32;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            color: #689F38;
+            font-weight: normal;
+        }
+        
+        .cycle-container {
+            margin-bottom: 30px;
+        }
+        
+        .cycle-title {
+            background-color: #AED581;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px 5px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cycle-content {
+            display: none;
+            background-color: #DCEDC8;
+            padding: 15px;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .course {
+            background-color: #F1F8E9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #689F38;
+        }
+        
+        .course.elective {
+            border-left-color: #FFA000;
+        }
+        
+        .course-code {
+            font-weight: bold;
+            color: #2E7D32;
+        }
+        
+        .course-credits {
+            float: right;
+            background-color: #81C784;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+        }
+        
+        .course-prerequisite {
+            font-size: 0.8em;
+            color: #616161;
+            margin-top: 5px;
+        }
+        
+        .filters {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: #C8E6C9;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #81C784;
+            color: white;
+        }
+        
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            padding: 10px;
+            border: 1px solid #AED581;
+            border-radius: 20px;
+            background-color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .course {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Carrera Profesional de Terapia de Audición, Voz y Lenguaje</h1>
+        <p class="subtitle">Modalidad Presencial - Malla Curricular 2025</p>
+    </div>
+    
+    <input type="text" class="search-box" placeholder="Buscar asignatura por nombre o código...">
+    
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">Todas</button>
+        <button class="filter-btn" data-filter="general">Generales</button>
+        <button class="filter-btn" data-filter="especifico">Específicas</button>
+        <button class="filter-btn" data-filter="especialidad">Especialidad</button>
+        <button class="filter-btn" data-filter="obligatorio">Obligatorias</button>
+        <button class="filter-btn" data-filter="electivo">Electivas</button>
+    </div>
+    
+    <!-- Primer Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Primer Ciclo</span>
+            <span>8 asignaturas | 21 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especifico" data-category="obligatorio">
+                <span class="course-code">U0112</span> - Técnicas Básicas en Atención de Salud
+                <span class="course-credits">2 créditos</span>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            <div class="course" data-type="general" data-category="obligatorio">
+                <span class="course-code">U0002</span> - Elementos de Química
+                <span class="course-credits">4 créditos</span>
+                <div class="course-prerequisite">Prerrequisito: Ninguno</div>
+            </div>
+            <!-- Más asignaturas del primer ciclo... -->
+        </div>
+    </div>
+    
+    <!-- Segundo Ciclo -->
+    <div class="cycle-container">
+        <div class="cycle-title" onclick="toggleCycle(this)">
+            <span>Segundo Ciclo</span>
+            <span>8 asignaturas | 23 créditos</span>
+        </div>
+        <div class="cycle-content">
+            <div class="course" data-type="especifico" data-category="obligatorio">
+                <span class="course-code">U0105</span> - Fundamentos de Química Orgánica
+                <span class="course-credits">4 créditos</span>
+                <div class="course-prerequisite">Prerrequisito: Elementos de Química</div>
+            </div>
+            <!-- Más asignaturas del segundo ciclo... -->
+        </div>
+    </div>
+    
+    <!-- Más ciclos... -->
+    
+    <script>
+        // Función para mostrar/ocultar ciclos
+        function toggleCycle(element) {
+            const content = element.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+        
+        // Función para filtrar asignaturas
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                const courses = document.querySelectorAll('.course');
+                
+                courses.forEach(course => {
+                    if (filter === 'all') {
+                        course.style.display = 'block';
+                    } else if (course.getAttribute('data-type') === filter || 
+                               course.getAttribute('data-category') === filter) {
+                        course.style.display = 'block';
+                    } else {
+                        course.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Función para búsqueda
+        const searchBox = document.querySelector('.search-box');
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const courses = document.querySelectorAll('.course');
+            
+            courses.forEach(course => {
+                const text = course.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    course.style.display = 'block';
+                } else {
+                    course.style.display = 'none';
+                }
+            });
+        });
+        
+        // Abrir primer ciclo por defecto
+        document.querySelector('.cycle-title').click();
+    </script>
+</body>
+</html>
